@@ -1,0 +1,20 @@
+{
+    "logger": {
+        "level": "debug",
+        "file": "./logs/log.txt"
+    },
+    "database": {
+        "name": "test",
+        "host": "127.0.0.1",
+        "port": 5432,
+        "user": "postgres",
+        "password": "123qwe",
+        "migrationsPath": "./migrations"
+    },
+    "server": {
+        "host": "0.0.0.0",
+        "port": 8080,
+        "grpcHost": "0.0.0.0",
+        "grpcPort": 5531
+    }
+}

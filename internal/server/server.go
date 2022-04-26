@@ -25,7 +25,7 @@ type Logger interface {
 }
 
 type Application interface {
-	Login(ctx context.Context, login, password, ip string) error
+	Login(ctx context.Context, login, password, ip string) (bool, error)
 	ResetBuket(ctx context.Context, login, ip string) error
 	AddToBlacklist(ctx context.Context, subnet string) error
 	RemoveFromBlacklist(ctx context.Context, subnet string) error
@@ -38,7 +38,7 @@ func NewServer(logger Logger, app Application, host string, port string) *Server
 	return &Server{nil, logger, app, addr, UnimplementedBFAPToolServer{}}
 }
 
-func (s *Server) Start(_ context.Context) error {
+func (s *Server) Start() error {
 	lsn, err := net.Listen("tcp", s.addr)
 	if err != nil {
 		return err
@@ -52,7 +52,7 @@ func (s *Server) Start(_ context.Context) error {
 	return server.Serve(lsn)
 }
 
-func (s *Server) Stop(_ context.Context) error {
+func (s *Server) Stop() error {
 	s.server.GracefulStop()
 	return nil
 }
