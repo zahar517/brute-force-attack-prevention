@@ -16,7 +16,7 @@ func (s *Storage) DeleteWhitelistSubnet(ctx context.Context, subnet string) erro
 	return err
 }
 
-func (s *Storage) IsIpInWhitelist(ctx context.Context, ip string) (bool, error) {
+func (s *Storage) IsIPInWhitelist(ctx context.Context, ip string) (bool, error) {
 	res, err := s.db.ExecContext(ctx, `SELECT subnet FROM whitelist WHERE subnet >>= $1`, ip)
 	if err != nil {
 		return false, err

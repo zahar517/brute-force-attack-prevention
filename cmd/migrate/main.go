@@ -3,14 +3,13 @@ package main
 import (
 	"log"
 
-	flag "github.com/spf13/pflag"
-
-	"github.com/pressly/goose/v3"
-	"github.com/zahar517/brute-force-attack-prevention/internal/config"
-
 	// Import pg driver.
 	_ "github.com/jackc/pgx/v4/stdlib"
-	// Import migrations
+	"github.com/pressly/goose/v3"
+	flag "github.com/spf13/pflag"
+
+	// Import migrations.
+	"github.com/zahar517/brute-force-attack-prevention/internal/config"
 	_ "github.com/zahar517/brute-force-attack-prevention/migrations"
 )
 
@@ -48,6 +47,6 @@ func main() {
 	command := args[0]
 	err = goose.Run(command, db, "./migrations", args[1:]...)
 	if err != nil {
-		log.Fatalf("goose %v: %v", command, err)
+		log.Printf("goose %v: %v", command, err)
 	}
 }

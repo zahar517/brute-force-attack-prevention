@@ -8,13 +8,12 @@ import (
 	"syscall"
 	"time"
 
+	flag "github.com/spf13/pflag"
 	"github.com/zahar517/brute-force-attack-prevention/internal/app"
 	"github.com/zahar517/brute-force-attack-prevention/internal/config"
 	"github.com/zahar517/brute-force-attack-prevention/internal/logger"
 	"github.com/zahar517/brute-force-attack-prevention/internal/server"
 	"github.com/zahar517/brute-force-attack-prevention/internal/storage"
-
-	flag "github.com/spf13/pflag"
 )
 
 var configFile string

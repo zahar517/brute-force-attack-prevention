@@ -21,8 +21,8 @@ type Storage interface {
 	DeleteBkacklistSubnet(ctx context.Context, subnet string) error
 	CreateWhitelistSubnet(ctx context.Context, subnet string) error
 	DeleteWhitelistSubnet(ctx context.Context, subnet string) error
-	IsIpInBlacklist(ctx context.Context, subnet string) (bool, error)
-	IsIpInWhitelist(ctx context.Context, subnet string) (bool, error)
+	IsIPInBlacklist(ctx context.Context, subnet string) (bool, error)
+	IsIPInWhitelist(ctx context.Context, subnet string) (bool, error)
 }
 
 func New(logger Logger, storage Storage) *App {
@@ -33,7 +33,7 @@ func New(logger Logger, storage Storage) *App {
 }
 
 func (a *App) Login(ctx context.Context, login, password, ip string) (bool, error) {
-	isInBlacklist, err := a.storage.IsIpInBlacklist(ctx, ip)
+	isInBlacklist, err := a.storage.IsIPInBlacklist(ctx, ip)
 	if err != nil {
 		return false, err
 	}
@@ -41,7 +41,7 @@ func (a *App) Login(ctx context.Context, login, password, ip string) (bool, erro
 		return false, nil
 	}
 
-	isInWhitelist, err := a.storage.IsIpInWhitelist(ctx, ip)
+	isInWhitelist, err := a.storage.IsIPInWhitelist(ctx, ip)
 	if err != nil {
 		return false, err
 	}
