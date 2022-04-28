@@ -7,9 +7,8 @@ import (
 	_ "github.com/jackc/pgx/v4/stdlib"
 	"github.com/pressly/goose/v3"
 	flag "github.com/spf13/pflag"
-
-	// Import migrations.
 	"github.com/zahar517/brute-force-attack-prevention/internal/config"
+	// Import migrations.
 	_ "github.com/zahar517/brute-force-attack-prevention/migrations"
 )
 
