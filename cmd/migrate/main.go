@@ -10,7 +10,6 @@ import (
 	"github.com/joho/godotenv"
 	"github.com/pressly/goose/v3"
 	flag "github.com/spf13/pflag"
-
 	// Import migrations.
 	_ "github.com/zahar517/brute-force-attack-prevention/migrations"
 )
@@ -24,8 +23,7 @@ func main() {
 		log.Fatal("migrate: bad args")
 	}
 
-	err := godotenv.Load()
-	if err != nil {
+	if err := godotenv.Load(); err != nil {
 		log.Fatal("Error loading .env file")
 	}
 
