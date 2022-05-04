@@ -4,26 +4,21 @@ import (
 	"context"
 	"log"
 	"net"
+	"os"
 
+	"github.com/joho/godotenv"
 	flag "github.com/spf13/pflag"
 	"github.com/zahar517/brute-force-attack-prevention/internal/server"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 )
 
-var (
-	host  string
-	port  string
+const (
 	add   = "add"
 	black = "black"
 	rm    = "rm"
 	white = "white"
 )
-
-func init() {
-	flag.StringVarP(&host, "host", "h", "127.0.0.1", "host")
-	flag.StringVarP(&port, "port", "p", "5531", "port")
-}
 
 func main() {
 	flag.Parse()
@@ -43,7 +38,14 @@ func main() {
 		log.Fatal("use black or white list")
 	}
 
-	conn, err := grpc.Dial(net.JoinHostPort(host, port), grpc.WithTransportCredentials(insecure.NewCredentials()))
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+	grpcHost := os.Getenv("GRPC_HOST")
+	grpcPort := os.Getenv("GRPC_PORT")
+
+	conn, err := grpc.Dial(net.JoinHostPort(grpcHost, grpcPort), grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Fatal(err)
 	}

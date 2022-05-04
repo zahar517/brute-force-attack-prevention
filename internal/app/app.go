@@ -7,6 +7,7 @@ import (
 type App struct {
 	logger  Logger
 	storage Storage
+	limiter Limiter
 }
 
 type Logger interface {
@@ -25,10 +26,16 @@ type Storage interface {
 	IsIPInWhitelist(ctx context.Context, subnet string) (bool, error)
 }
 
-func New(logger Logger, storage Storage) *App {
+type Limiter interface {
+	Add(login, password, ip string) bool
+	Reset(login, ip string)
+}
+
+func New(logger Logger, storage Storage, limiter Limiter) *App {
 	return &App{
 		logger:  logger,
 		storage: storage,
+		limiter: limiter,
 	}
 }
 
@@ -49,10 +56,14 @@ func (a *App) Login(ctx context.Context, login, password, ip string) (bool, erro
 		return true, nil
 	}
 
-	return false, nil
+	res := a.limiter.Add(login, password, ip)
+
+	return res, nil
 }
 
 func (a *App) ResetBuket(ctx context.Context, login, ip string) error {
+	a.limiter.Reset(login, ip)
+
 	return nil
 }
 

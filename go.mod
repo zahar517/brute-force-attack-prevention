@@ -5,6 +5,7 @@ go 1.17
 require (
 	github.com/jackc/pgx/v4 v4.16.0
 	github.com/jmoiron/sqlx v1.3.5
+	github.com/joho/godotenv v1.4.0
 	github.com/pressly/goose/v3 v3.5.3
 	github.com/spf13/pflag v1.0.5
 	github.com/spf13/viper v1.4.0

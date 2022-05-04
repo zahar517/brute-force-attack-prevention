@@ -31,7 +31,10 @@ func New(level string, file string) (*Logger, error) {
 
 	config.Level = zapLevel
 	config.Encoding = "json"
-	config.OutputPaths = append(config.OutputPaths, file)
+
+	if file != "stdout" && file != "stderr" {
+		config.OutputPaths = append(config.OutputPaths, file)
+	}
 
 	config.EncoderConfig.MessageKey = "message"
 	config.EncoderConfig.LevelKey = "level"

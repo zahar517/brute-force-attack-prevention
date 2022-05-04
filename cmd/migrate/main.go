@@ -1,22 +1,19 @@
 package main
 
 import (
+	"fmt"
 	"log"
+	"os"
 
 	// Import pg driver.
 	_ "github.com/jackc/pgx/v4/stdlib"
+	"github.com/joho/godotenv"
 	"github.com/pressly/goose/v3"
 	flag "github.com/spf13/pflag"
-	"github.com/zahar517/brute-force-attack-prevention/internal/config"
+
 	// Import migrations.
 	_ "github.com/zahar517/brute-force-attack-prevention/migrations"
 )
-
-var configFile string
-
-func init() {
-	flag.StringVarP(&configFile, "config", "c", "", "Path to configuration file")
-}
 
 func main() {
 	flag.Parse()
@@ -27,12 +24,21 @@ func main() {
 		log.Fatal("migrate: bad args")
 	}
 
-	config, err := config.NewConfig(configFile)
+	err := godotenv.Load()
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal("Error loading .env file")
 	}
 
-	db, err := goose.OpenDBWithDriver("pgx", config.Database.Dsn)
+	dsn := fmt.Sprintf(
+		"host=%v port=%v user=%v password=%v dbname=%v sslmode=disable",
+		os.Getenv("DB_HOST"),
+		os.Getenv("DB_PORT"),
+		os.Getenv("DB_USER"),
+		os.Getenv("DB_PASSWORD"),
+		os.Getenv("DB_NAME"),
+	)
+
+	db, err := goose.OpenDBWithDriver("pgx", dsn)
 	if err != nil {
 		log.Fatalf("goose: failed to open DB: %v\n", err)
 	}
