@@ -1,9 +1,10 @@
-package limiter
+package limiter_test
 
 import (
 	"testing"
 
 	"github.com/stretchr/testify/suite"
+	"github.com/zahar517/brute-force-attack-prevention/internal/limiter"
 )
 
 const (
@@ -13,11 +14,11 @@ const (
 
 type LimiterTestSuite struct {
 	suite.Suite
-	l *LeakyBucket
+	l *limiter.LeakyBucket
 }
 
 func (s *LimiterTestSuite) SetupTest() {
-	s.l = New(limit, limit+1, limit+2, interval)
+	s.l = limiter.New(limit, limit+1, limit+2, interval)
 }
 
 func TestLimiterTestSuite(t *testing.T) {
