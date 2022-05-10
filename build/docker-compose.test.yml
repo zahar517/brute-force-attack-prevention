@@ -1,0 +1,15 @@
+version: '3.9'
+
+services:
+  test:
+    build:
+      context: ../
+      dockerfile: ./build/Dockerfile.test
+    command: "true"
+    env_file:
+      - ./.env
+    depends_on: [postgres, migrate, bfaptool]
+    networks:
+      bruteforce:
+        aliases:
+          - test
