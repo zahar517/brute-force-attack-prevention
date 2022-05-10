@@ -14,7 +14,9 @@ services:
           - postgres
 
   migrate:
-    image: bruteforce:develop
+    build:
+      context: ../
+      dockerfile: ./build/Dockerfile
     command: "/opt/migrate up"
     env_file:
       - ./.env
@@ -25,7 +27,9 @@ services:
           - migrate
 
   bfaptool:
-    image: bruteforce:develop
+    build:
+      context: ../
+      dockerfile: ./build/Dockerfile
     command: "/opt/service"
     env_file:
       - ./.env
