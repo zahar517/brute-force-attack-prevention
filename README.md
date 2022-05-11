@@ -46,3 +46,43 @@ For unit-testing use `make test` command from the main project directory.
 Also integration tests are available by using `make integration-test` command.
 
 ## Api methods
+
+### Login attempt
+Request:
+- login
+- password
+- ip
+
+Response:
+- ok (true/false) - ok = true, if login is allowed, ok = false - if blocked
+
+### Reset bucket
+Request:
+- login
+- ip
+
+Reset buckets according to the passed params
+
+### Add to black list
+Request:
+- subnet
+
+Add subnet to black list
+
+### Remove from black list
+Request:
+- subnet
+
+Remove subnet from black list
+
+### Add to white list
+Request:
+- subnet
+
+Add subnet to white list
+
+### Remove from white list
+Request:
+- subnet
+
+Remove subnet from white list
