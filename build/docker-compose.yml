@@ -1,0 +1,46 @@
+version: '3.9'
+
+services:
+
+  postgres:
+    image: postgres:13
+    env_file:
+      - ./.env
+    volumes:
+      - ./db-init.sh:/docker-entrypoint-initdb.d/init.sh
+    networks:
+      bruteforce:
+        aliases:
+          - postgres
+
+  migrate:
+    build:
+      context: ../
+      dockerfile: ./build/Dockerfile
+    command: "/opt/migrate up"
+    env_file:
+      - ./.env
+    depends_on: [postgres]
+    networks:
+      bruteforce:
+        aliases:
+          - migrate
+
+  bfaptool:
+    build:
+      context: ../
+      dockerfile: ./build/Dockerfile
+    command: "/opt/service"
+    env_file:
+      - ./.env
+    depends_on: [postgres, migrate]
+    ports:
+      - 5531:5531
+    networks:
+      bruteforce:
+        aliases:
+          - bfaptool
+
+networks:
+  bruteforce:
+    driver: bridge

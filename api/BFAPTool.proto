@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package BFAPTool;
+
+import "google/protobuf/empty.proto";
+
+option go_package = "./;grpcserver";
+
+service BFAPTool {
+    rpc Login(LoginRequest) returns (LoginResponse) {}
+    rpc ResetBuket(ResetBucketRequest) returns (google.protobuf.Empty) {}
+    rpc AddToBlacklist(SubnetRequest) returns (google.protobuf.Empty) {}
+    rpc RemoveFromBlacklist(SubnetRequest) returns (google.protobuf.Empty) {}
+    rpc AddToWhitelist(SubnetRequest) returns (google.protobuf.Empty) {}
+    rpc RemoveFromWhitelist(SubnetRequest) returns (google.protobuf.Empty) {}
+}
+
+message LoginRequest {
+    string login = 1;
+    string password = 2;
+    string ip = 3;
+}
+
+message LoginResponse {
+	bool ok = 1;
+}
+
+message ResetBucketRequest {
+    string login = 1;
+    string ip = 2;
+}
+
+message SubnetRequest {
+	string subnet = 1;
+}

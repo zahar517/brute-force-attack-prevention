@@ -1,0 +1,18 @@
+FROM golang:1.17-alpine as builder
+
+ENV SERVICE_BIN /opt/service
+ENV MIGRATE_BIN /opt/migrate
+ENV CLI_BIN /opt/cli
+
+ENV CODE_DIR /go/src/
+
+ENV GOOS=linux
+ENV CGO_ENABLED=0
+
+WORKDIR ${CODE_DIR}
+
+COPY go.mod go.sum ./
+
+RUN go mod download
+
+COPY ./ ./
